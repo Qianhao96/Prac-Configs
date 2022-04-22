@@ -1,0 +1,7 @@
+# See Option 2
+# https://www.nginx.com/blog/deploying-nginx-nginx-plus-docker/
+
+FROM nginx
+
+# path is relative to current path which is in jenkins workplace
+COPY /build /var/www/html

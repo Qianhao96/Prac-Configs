@@ -1,0 +1,40 @@
+pipeline {
+   agent any
+   stages {
+        stage('Checkout Web And Build Prod APP') {
+            steps {
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'main']], // master
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [], 
+                        submoduleCfg: [], 
+                        userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-React.git']]
+                    ])
+                    sh 'npm install --legacy-peer-deps'
+                    sh 'npm run build'
+                }
+            }
+        }
+
+        stage('Deploy Prod To Remote Server') {
+            steps {
+                script {
+                    sshagent(credentials : ['SSH-DEPLOY-KEY']) {
+                        sh 'ssh -o StrictHostKeyChecking=no lqh@192.168.20.152 uptime'
+                        sh 'scp -r ./build/* lqh@192.168.20.152:/var/www/html/'
+                    }
+                }
+            }
+        }
+
+        // stage ('BuildDocker Image And Deploy To Remote server') {
+        //     steps{
+        //          sh 'sudo docker build -t prac_web_image -f /home/jenkins/deployment/Dockerfile.web .'
+        //          //Do this later    
+        //          //Looks like need to push the image to own docker hub repo and ssh to remote server and pull it down and run it.
+        //     }
+        // }
+    }
+}
