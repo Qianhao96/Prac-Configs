@@ -4,6 +4,7 @@ pipeline {
         stage('Checkout Web And Build Prod APP') {
             steps {
                 script {
+                    cleanWs()
                     checkout([
                         $class: 'GitSCM',
                         branches: [[name: 'main']], // master
@@ -12,8 +13,9 @@ pipeline {
                         submoduleCfg: [], 
                         userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-React.git']]
                     ])
-                    sh 'npm install --legacy-peer-deps'
+                    sh 'npm install'
                     sh 'npm run build'
+                    sh 'npm run export' // 'next' requires this
                 }
             }
         }
@@ -23,7 +25,10 @@ pipeline {
                 script {
                     sshagent(credentials : ['SSH-DEPLOY-KEY']) {
                         sh 'ssh -o StrictHostKeyChecking=no lqh@192.168.20.152 uptime'
-                        sh 'scp -r ./build/* lqh@192.168.20.152:/var/www/html/'
+                        // Can not rm -r on empty directory, so alwayse create a dummy file first.
+                        sh 'ssh lqh@192.168.20.152 "touch /var/www/html/test"'
+                        sh 'ssh lqh@192.168.20.152 "rm -r /var/www/html/*"'
+                        sh 'scp -r ./out/* lqh@192.168.20.152:/var/www/html/'
                     }
                 }
             }
