@@ -44,7 +44,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    pracApi = docker.build("prac-api", "--file deploymenttttt/Dockerfiles/Dockerfile.api .")
+                    pracApi = docker.build("prac-api", "--file deployment/Dockerfiles/Dockerfile.api .")
                 }
             }
         }
