@@ -7,9 +7,9 @@ pipeline {
     stages {
         stage('Checkout API And Prac-Configs') {
             steps {
-                script {
-                    cleanWs()
-                }
+                // script {
+                //     cleanWs()
+                // }
                 script {
                     checkout scm
                 }
@@ -48,16 +48,16 @@ pipeline {
                 }
             }
         }
-        stage('Push image to Dockerhub lqh Repo') {
-            steps {
-                script {
-                    docker.withRegistry(registry, registryCredential) {
-                        pracApi.push("${env.BUILD_ID}")
-                        pracApi.push("latest")
-                    }
-                }
-            }
-        }
+        // stage('Push image to Dockerhub lqh Repo') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry(registry, registryCredential) {
+        //                 pracApi.push("${env.BUILD_ID}")
+        //                 pracApi.push("latest")
+        //             }
+        //         }
+        //     }
+        // }
         // stage ('BuildDocker API Image And Deploy To Remote server') {
         //     steps{
         //          sh 'sudo docker build -t prac_web_image -f /home/jenkins/deployment/Dockerfile.web .'
