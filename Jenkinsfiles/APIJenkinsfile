@@ -1,0 +1,66 @@
+pipeline {
+    environment {
+        registry = "lqh19960723/prac_api"
+        registryCredential = 'dockerhub'
+    }
+    agent any
+    stages {
+        stage('Checkout API And Prac-Configs') {
+            steps {
+                // script {
+                //     cleanWs()
+                // }
+                script {
+                    checkout scm
+                }
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'main']], // master
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'API']], 
+                        extensions: [], 
+                        submoduleCfg: [], 
+                        userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-API.git']]
+                    ])
+                }
+
+                // script {
+                //     checkout([
+                //         $class: 'GitSCM',
+                //         branches: [[name: 'main']], // master
+                //         doGenerateSubmoduleConfigurations: false,
+                //         extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Config']], 
+                //         extensions: [], 
+                //         submoduleCfg: [], 
+                //         userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-Configs.git']]
+                //     ])
+                // }
+            }
+        }
+        // stage('Build Docker images') {
+        //     steps {
+        //         script {
+        //         aisApi = docker.build("ais-api", "--file deployment/dockerfiles/Dockerfile.api .")
+        //         }
+        //     }
+        // }
+        // stage('Push images to ECR') {
+        //     steps {
+        //         script {
+        //             docker.withRegistry('https://545076629259.dkr.ecr.ap-southeast-2.amazonaws.com/ais-api', 'ecr:ap-southeast-2:aws-ecr-credentials') {
+        //                 aisApi.push("${env.BUILD_ID}")
+        //                 aisApi.push("latest")
+        //             }
+        //         }
+        //     }
+        // }
+        // stage ('BuildDocker API Image And Deploy To Remote server') {
+        //     steps{
+        //          sh 'sudo docker build -t prac_web_image -f /home/jenkins/deployment/Dockerfile.web .'
+        //          //Do this later    
+        //          //Looks like need to push the image to own docker hub repo and ssh to remote server and pull it down and run it.
+        //     }
+        // }
+    }
+}
