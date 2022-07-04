@@ -21,7 +21,7 @@ pipeline {
                         $class: 'GitSCM',
                         branches: [[name: 'main']], // master
                         doGenerateSubmoduleConfigurations: false,
-                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'API']], 
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'prac-api']], 
                         extensions: [], 
                         submoduleCfg: [], 
                         userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-API.git']]
@@ -36,7 +36,7 @@ pipeline {
                         $class: 'GitSCM',
                         branches: [[name: 'main']], // master
                         doGenerateSubmoduleConfigurations: false,
-                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Config']], 
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'prac-config']], 
                         extensions: [], 
                         submoduleCfg: [], 
                         userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-Configs.git']]
