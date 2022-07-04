@@ -25,17 +25,17 @@ pipeline {
                     ])
                 }
 
-                // script {
-                //     checkout([
-                //         $class: 'GitSCM',
-                //         branches: [[name: 'main']], // master
-                //         doGenerateSubmoduleConfigurations: false,
-                //         extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Config']], 
-                //         extensions: [], 
-                //         submoduleCfg: [], 
-                //         userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-Configs.git']]
-                //     ])
-                // }
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'main']], // master
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'Config']], 
+                        extensions: [], 
+                        submoduleCfg: [], 
+                        userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-Configs.git']]
+                    ])
+                }
             }
         }
         // stage('Build Docker images') {
