@@ -44,7 +44,7 @@ pipeline {
             steps{
                 script {
                     withCredentials([
-                        usernamePassword(credentialsId: prac-api-dockerhub, usernameVariable: 'dockerUser', passwordVariable: 'dockerPass'),
+                        usernamePassword(credentialsId: 'prac-api-dockerhub', usernameVariable: 'dockerUser', passwordVariable: 'dockerPass'),
                     ]){
                         sshagent(credentials : ['SSH-DEPLOY-KEY']) {
                             sh 'ssh -o StrictHostKeyChecking=no lqh@192.168.20.153 uptime'
