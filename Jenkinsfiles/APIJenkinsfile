@@ -42,7 +42,6 @@ pipeline {
         }
         stage ('Run Docker API Image As Container At Remote Server') {
             steps{
-                
                 script {
                     sshagent(credentials : ['SSH-DEPLOY-KEY']) {
                         sh 'ssh -o StrictHostKeyChecking=no lqh@192.168.20.153 uptime'
