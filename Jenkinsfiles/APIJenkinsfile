@@ -5,7 +5,7 @@ pipeline {
     }
     agent any
     stages {
-        stage('Checkout API And Prac-Configs') {
+        stage('Checkout API') {
             steps {
                 script {
                     checkout scm
@@ -20,6 +20,20 @@ pipeline {
                         extensions: [], 
                         submoduleCfg: [], 
                         userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-API.git']]
+                    ])
+                }
+                dir('prac-config') {
+                    deleteDir()
+                }
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'main']], // master
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'prac-config']], 
+                        extensions: [], 
+                        submoduleCfg: [], 
+                        userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-Configs.git']]
                     ])
                 }
             }
