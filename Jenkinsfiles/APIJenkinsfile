@@ -5,41 +5,41 @@ pipeline {
     }
     agent any
     stages {
-        // stage('Checkout API') {
-        //     steps {
-        //         script {
-        //             checkout scm
-        //         }
-        //         script {
-        //             checkout([
-        //                 $class: 'GitSCM',
-        //                 branches: [[name: 'main']], // master
-        //                 doGenerateSubmoduleConfigurations: false,
-        //                 extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'prac-api']], 
-        //                 extensions: [], 
-        //                 submoduleCfg: [], 
-        //                 userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-API.git']]
-        //             ])
-        //         }
-        //     }
-        // }
-        // stage('Build Docker image') {
-        //     steps {
-        //         script {
-        //             pracApi = docker.build(registry, "--file deployment/Dockerfiles/Dockerfile.api .")
-        //         }
-        //     }
-        // }
-        // stage('Push image to Dockerhub lqh19960723/prac_api') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry('', registryCredential) {
-        //                 pracApi.push("${env.BUILD_ID}")
-        //                 pracApi.push("latest")
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Checkout API') {
+            steps {
+                script {
+                    checkout scm
+                }
+                script {
+                    checkout([
+                        $class: 'GitSCM',
+                        branches: [[name: 'main']], // master
+                        doGenerateSubmoduleConfigurations: false,
+                        extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'prac-api']], 
+                        extensions: [], 
+                        submoduleCfg: [], 
+                        userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-API.git']]
+                    ])
+                }
+            }
+        }
+        stage('Build Docker image') {
+            steps {
+                script {
+                    pracApi = docker.build(registry, "--file deployment/Dockerfiles/Dockerfile.api .")
+                }
+            }
+        }
+        stage('Push image to Dockerhub lqh19960723/prac_api') {
+            steps {
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        pracApi.push("${env.BUILD_ID}")
+                        pracApi.push("latest")
+                    }
+                }
+            }
+        }
         stage ('Run Docker API Image As Container At Remote Server') {
             steps{
                 script {
