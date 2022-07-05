@@ -7,9 +7,6 @@ pipeline {
     stages {
         stage('Checkout API') {
             steps {
-                // script {
-                //      cleanWs()
-                // }
                 script {
                     checkout scm
                 }
@@ -37,7 +34,8 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        pracApi.push()
+                        pracApi.push("${env.BUILD_ID}")
+                        pracApi.push("latest")
                     }
                 }
             }
@@ -48,6 +46,10 @@ pipeline {
         //          //Do this later    
         //          //Looks like need to push the image to own docker hub repo and ssh to remote server and pull it down and run it.
         //     }
+        // }
+
+        // script {
+        //      cleanWs()
         // }
     }
 }
