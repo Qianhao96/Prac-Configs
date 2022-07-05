@@ -48,6 +48,7 @@ pipeline {
                         sh 'ssh -o StrictHostKeyChecking=no lqh@192.168.20.153 uptime'
                         sh 'ssh lqh@192.168.20.153 "docker image rm -f lqh19960723/prac_api:latest"'
                         sh 'ssh lqh@192.168.20.153 "docker pull lqh19960723/prac_api:latest"'
+                        sh 'ssh lqh@192.168.20.153 "docker container stop pracApi"'
                         sh 'ssh lqh@192.168.20.153 "docker run --rm --name pracApi -it -d -p 80:80 lqh19960723/prac_api"'
                     }
                 }
@@ -56,7 +57,7 @@ pipeline {
 
         stage('Cleaning up') { 
             steps { 
-                sh "docker rmi $registry:$env.BUILD_ID"
+                sh "docker rmi $registry:${env.BUILD_ID}"
                 sh "docker rmi $registry:latest" 
                 cleanWs()
             }
