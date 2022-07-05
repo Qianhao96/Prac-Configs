@@ -31,15 +31,15 @@ pipeline {
                 }
             }
         }
-        // stage('Push image to Dockerhub lqh Repo') {
-        //     steps {
-        //         script {
-        //             docker.withRegistry(registry, registryCredential) {
-        //                 pracApi.push("${env.BUILD_ID}")
-        //                 pracApi.push("latest")
-        //             }
-        //         }
-        //     }
+        stage('Push image to Dockerhub lqh Repo') {
+            steps {
+                script {
+                    docker.withRegistry(registry, registryCredential) {
+                        pracApi.push("${env.BUILD_ID}")
+                        pracApi.push("latest")
+                    }
+                }
+            }
         // }
         // stage ('BuildDocker API Image And Deploy To Remote server') {
         //     steps{
