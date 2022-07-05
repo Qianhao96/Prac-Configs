@@ -46,9 +46,9 @@ pipeline {
                 script {
                     sshagent(credentials : ['SSH-DEPLOY-KEY']) {
                         sh 'ssh -o StrictHostKeyChecking=no lqh@192.168.20.153 uptime'
-                        sh 'ssh lqh@192.168.20.153 "docker image rm lqh19960723/prac_api:latest"'
+                        sh 'ssh lqh@192.168.20.153 "docker image rm -f lqh19960723/prac_api:latest"'
                         sh 'ssh lqh@192.168.20.153 "docker pull lqh19960723/prac_api:latest"'
-                        sh 'docker run --rm --name pracApi -it -d -p 8000:80 lqh19960723/prac_api'
+                        sh 'ssh lqh@192.168.20.153 "docker run --rm --name pracApi -it -d -p 80:80 lqh19960723/prac_api"'
                     }
                 }
             }
