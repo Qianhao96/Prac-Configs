@@ -7,9 +7,9 @@ pipeline {
     stages {
         stage('Checkout API') {
             steps {
-                script {
-                     cleanWs()
-                }
+                // script {
+                //      cleanWs()
+                // }
                 script {
                     checkout scm
                 }
