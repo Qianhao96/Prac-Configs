@@ -40,7 +40,7 @@ pipeline {
                     }
                 }
             }
-        // }
+        }
         // stage ('BuildDocker API Image And Deploy To Remote server') {
         //     steps{
         //          sh 'sudo docker build -t prac_web_image -f /home/jenkins/deployment/Dockerfile.web .'
