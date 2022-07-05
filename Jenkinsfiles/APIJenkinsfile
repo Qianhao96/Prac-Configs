@@ -7,13 +7,11 @@ pipeline {
     stages {
         stage('Checkout API And Prac-Configs') {
             steps {
-                // script {
-                //     cleanWs()
-                // }
                 script {
                     checkout scm
                 }
                 script {
+                    cleanWs()
                     checkout([
                         $class: 'GitSCM',
                         branches: [[name: 'main']], // master
@@ -24,21 +22,6 @@ pipeline {
                         userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-API.git']]
                     ])
                 }
-
-                // dir('prac-config') {
-                //     deleteDir()
-                // }
-                // script {
-                //     checkout([
-                //         $class: 'GitSCM',
-                //         branches: [[name: 'main']], // master
-                //         doGenerateSubmoduleConfigurations: false,
-                //         extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: 'prac-config']], 
-                //         extensions: [], 
-                //         submoduleCfg: [], 
-                //         userRemoteConfigs: [[credentialsId: 'Git-Personal-Access-Token', url: 'https://github.com/Qianhao96/Prac-Configs.git']]
-                //     ])
-                // }
             }
         }
         stage('Build Docker image') {
