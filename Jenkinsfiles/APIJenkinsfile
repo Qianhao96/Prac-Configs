@@ -35,6 +35,7 @@ pipeline {
                 script {
                     docker.withRegistry('', registryCredential) {
                         pracApi.push("${env.BUILD_ID}")
+                        pracApi.push("latest")
                     }
                 }
             }
@@ -46,7 +47,7 @@ pipeline {
                     sshagent(credentials : ['SSH-DEPLOY-KEY']) {
                         sh 'ssh -o StrictHostKeyChecking=no lqh@192.168.20.153 uptime'
                         // Can not rm -r on empty directory, so alwayse create a dummy file first.
-                        sh 'ssh lqh@192.168.20.153 "docker pull lqh19960723/prac_api:${env.BUILD_ID}"'
+                        sh 'ssh lqh@192.168.20.153 "docker pull lqh19960723/prac_api:latest"'
                     }
                 }
             }
