@@ -23,5 +23,5 @@
 # m h  dom mon dow   command
 
 
-# https://prasad-k-pawar.medium.com/get-started-with-cron-jobs-linux-617a1c5cc26a
-0 6 * * * sh /home/lqh/dbbackup.sh
+# https://fedingo.com/how-to-run-shell-script-as-cron-job/
+0 6 * * * /home/lqh/dbbackup.sh
