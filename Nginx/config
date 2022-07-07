@@ -61,12 +61,20 @@ server {
   proxy_intercept_errors on;
 
   location ~ "^/static/[0-9a-fA-F]{8}\/(.*)$" {
+    #https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
+    auth_basic "Restricted Content";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+
     # rewrite all static files into requests to the root
     # E.g /static/12345678/css/something.css will become /css/something.css
     rewrite "^/static/[0-9a-fA-F]{8}\/(.*)" /$1 last;
   }
 
   location /userContent {
+    #https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
+    auth_basic "Restricted Content";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+
     # have nginx handle all the static requests to userContent folder
     # note : This is the $JENKINS_HOME dir
     root /var/lib/jenkins/;
@@ -79,6 +87,10 @@ server {
   }
 
   location / {
+      #https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
+      auth_basic "Restricted Content";
+      auth_basic_user_file /etc/nginx/.htpasswd;
+
       sendfile off;
       proxy_pass         http://jenkins;
       proxy_redirect     default;
@@ -166,6 +178,10 @@ server {
 
 
       location / {
+        #https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
+        auth_basic "Restricted Content";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-NginX-Proxy true;
@@ -230,6 +246,10 @@ server {
     error_log       /var/log/nginx/coolguyapi.error.log;
 
     location / {
+      # #https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
+      # auth_basic "Restricted Content";
+      # auth_basic_user_file /etc/nginx/.htpasswd;
+
       proxy_pass         http://192.168.20.153;
       proxy_http_version 1.1;
       proxy_set_header   Upgrade $http_upgrade;
