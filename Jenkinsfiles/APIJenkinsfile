@@ -52,8 +52,7 @@ pipeline {
                             sh 'ssh lqh@192.168.20.153 "docker login -u $dockerUser -p $dockerPass"'
                             sh 'ssh lqh@192.168.20.153 "docker pull lqh19960723/prac_api:latest"'
                             sh 'ssh lqh@192.168.20.153 "docker container stop pracApi || true && docker container rm pracApi || true"'
-                            sh 'ssh lqh@192.168.20.153 "docker run --name pracApi -it -d -p 80:80 lqh19960723/prac_api"'
-                            sh 'ssh lqh@192.168.20.153 "docker run -d --restart unless-stopped pracApi"'
+                            sh 'ssh lqh@192.168.20.153 "docker run --restart unless-stopped --name pracApi -it -d -p 80:80 lqh19960723/prac_api"'
                         }
                     }
 
