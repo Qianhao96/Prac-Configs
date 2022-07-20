@@ -24,4 +24,4 @@
 
 
 # https://fedingo.com/how-to-run-shell-script-as-cron-job/
-0 6 * * * /home/lqh/dbbackup.sh
+0 6 * * * sudo /home/lqh/dbbackup.sh
