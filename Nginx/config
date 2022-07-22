@@ -179,14 +179,6 @@ server {
         proxy_pass_header Server;
         proxy_cache_bypass $http_upgrade;
         proxy_redirect off;
-        error_page 404  /notfoundpage;
-      }
-
-      location = /notfoundpage {
-        root    html;
-        allow   all;
-        index   example.com.404.html;
-        rewrite ^ $scheme://liuqianhao.com permanent;
       }
 }
 
