@@ -27,7 +27,7 @@ pipeline {
                         // Can not rm -r on empty directory, so alwayse create a dummy file first.
                         sh 'ssh lqh@192.168.20.152 "touch /var/www/html/test"'
                         sh 'ssh lqh@192.168.20.152 "rm -r /var/www/html/*"'
-                        sh 'scp -r ./out/* lqh@192.168.20.152:/var/www/html/'
+                        sh 'scp -r ./build/* lqh@192.168.20.152:/var/www/html/'
                     }
                 }
             }
